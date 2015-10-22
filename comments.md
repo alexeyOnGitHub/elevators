@@ -23,7 +23,7 @@
     * it seems dangerous anyway
        
   * InvalidRequest should be renamed to InvalidRequestException
-  * ElevatorController should not use int value for specifying direction, even if it is assumed that constants will be used.
+  * FIXED this: ElevatorController should not use int value for specifying direction, even if it is assumed that constants will be used.
 you would need to check "what if illegal value is provided". why bother? use an enum with values UP, DOWN, UNKNOWN instead. 
 UP and DOWN will be used by client code while UNKNOWN will be used by Elevator implementation class to show that 
 it does not have a specific direction it needs to move towards at that moment. 

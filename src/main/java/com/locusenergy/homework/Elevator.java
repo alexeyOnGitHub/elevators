@@ -24,7 +24,7 @@ public interface Elevator {
      */
     int currentFloor();
 
-    Integer getDirection();
+    Direction getDirection();
 
     String getName();
 

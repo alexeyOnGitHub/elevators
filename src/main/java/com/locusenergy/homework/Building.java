@@ -24,14 +24,14 @@ public class Building implements ElevatorController {
     }
 
     @Override
-    public Elevator callElevator(int fromFloor, int direction) throws InvalidRequest {
+    public Elevator callElevator(int fromFloor, Direction direction) throws InvalidRequest {
         checkFloorWithinLimits(fromFloor);
         Elevator elevator = findElevator(fromFloor, direction);
         elevator.requestFloor(fromFloor);
         return elevator;
     }
 
-    private Elevator findElevator(int floor, int direction) {
+    private Elevator findElevator(int floor, Direction direction) {
         Elevator candidate = null;
         while (candidate == null) {
             candidate = findPossibleElevator(floor, direction);
@@ -46,7 +46,7 @@ public class Building implements ElevatorController {
         return candidate;
     }
 
-    private Elevator findPossibleElevator(int floor, int direction) {
+    private Elevator findPossibleElevator(int floor, Direction direction) {
         Elevator candidate = null;
         int minDistanceInFloors = Integer.MAX_VALUE;
         for (Elevator elevator : elevators) {
@@ -65,7 +65,7 @@ public class Building implements ElevatorController {
         return candidate;
     }
 
-    private boolean isApproaching(Elevator elevator, int direction, int floor) {
+    private boolean isApproaching(Elevator elevator, Direction direction, int floor) {
         return elevator.isBusy() && elevator.getDirection() == direction && notReachedOurFloorYet(elevator, floor);
     }
 

@@ -1,5 +1,6 @@
 package com.locusenergy.homework.internal;
 
+import com.locusenergy.homework.Direction;
 import com.locusenergy.homework.Elevator;
 import com.locusenergy.homework.FloorListener;
 import com.locusenergy.homework.InvalidRequest;
@@ -11,7 +12,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import static com.locusenergy.homework.Direction.DOWN;
 import static com.locusenergy.homework.Direction.UP;
-import static com.locusenergy.homework.Direction.getDirectionText;
 
 /**
  * Use ElevatorFactory.createElevator() to create instances of this class.
@@ -32,7 +32,7 @@ class ElevatorImpl implements Elevator {
     // TODO "busy" can be replaced with "direction==null"
     private volatile boolean busy;
     private volatile int currentFloor;
-    private volatile Integer direction;
+    private volatile Direction direction;
     private volatile FloorListener listener;
 
 
@@ -99,7 +99,7 @@ class ElevatorImpl implements Elevator {
 
     private void keepMoving() {
         changeDirectionIfNoStopsOnTheWay();
-        LOG.debug(name + ": going " + getDirectionText(direction) + " from " + currentFloor + ". " + getFloorsString());
+        LOG.debug(name + ": going " + direction.toString() + " from " + currentFloor + ". " + getFloorsString());
         if (direction.equals(UP)) {
             if (currentFloor < topFloor) {
                 currentFloor++;
@@ -139,9 +139,9 @@ class ElevatorImpl implements Elevator {
     }
 
     private void changeDirection() {
-        if (UP.equals(direction)) {
+        if (UP == direction) {
             direction = DOWN;
-        } else if (DOWN.equals(direction)) {
+        } else if (DOWN == direction) {
             direction = UP;
         }
     }
@@ -156,7 +156,7 @@ class ElevatorImpl implements Elevator {
         lock.lock();
 
         try {
-            LOG.debug(name + ": requested floor: " + floor + ". current floor: " + currentFloor + ", current direction: " + getDirectionText(direction));
+            LOG.debug(name + ": requested floor: " + floor + ". current floor: " + currentFloor + ", current direction: " + direction);
             if (floorsToStopAt.isEmpty()) {
                 direction = findDirection(floor);
             }
@@ -167,7 +167,7 @@ class ElevatorImpl implements Elevator {
         }
     }
 
-    private Integer findDirection(int floor) {
+    private Direction findDirection(int floor) {
         if (currentFloor <= floor) {
             return UP;
         }
@@ -190,7 +190,7 @@ class ElevatorImpl implements Elevator {
     }
 
     @Override
-    public Integer getDirection() {
+    public Direction getDirection() {
         return direction;
     }
 
@@ -228,7 +228,7 @@ class ElevatorImpl implements Elevator {
                 name +
                 ", busy=" + busy +
                 ", currentFloor=" + currentFloor +
-                ", direction=" + getDirectionText(direction)
+                ", direction=" + direction.toString()
                 + "}";
     }
 

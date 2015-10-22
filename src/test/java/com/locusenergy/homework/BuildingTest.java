@@ -202,7 +202,7 @@ public class BuildingTest {
                 public Integer call() throws Exception {
                     Random random = new Random();
                     Integer requestedFromFloor = generateRandomFloorNumber(random);
-                    Integer direction = random.nextBoolean() ? UP : DOWN;
+                    Direction direction = random.nextBoolean() ? UP : DOWN;
                     Elevator elevator = building.callElevator(requestedFromFloor, direction);
                     waitUntilElevatorIsDone(elevator);
                     elevator.requestFloor(generateRandomFloorNumber(random));
